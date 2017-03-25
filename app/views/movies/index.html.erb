@@ -1,10 +1,11 @@
 <div class="col-md-12">
   <div class="movie">
-    <%= link_to("New movie", new_movie_path, class: "btn btn-primary pull-right")%>
+    <%= link_to("新影片", new_movie_path, class: "btn btn-primary pull-right")%>
   </div>
   <table class="table table-hover">
     <thead>
       <tr>
+        <td>#</td>
         <td>影片名称</td>
         <td>影片简介</td>
       </tr>
@@ -12,11 +13,12 @@
     <tbody>
       <% @movies.each do |movie| %>
        <tr>
+         <td>#</td>
          <td><%= link_to(movie.title, movie_path(movie)) %>></td>
          <td><%= movie.description %></td>
          <td>
-           <%= link_to("#", edit_movie_path(movie), class: "btn btn-sm btn-default")%>
-           <%= link_to("#", movie_path(movie),       class: "btn btn-sm btn-default",
+           <%= link_to("编辑", edit_movie_path(movie), class: "btn btn-sm btn-default")%>
+           <%= link_to("删除", movie_path(movie),       class: "btn btn-sm btn-default",
                        method: :delete, )%>
          </td>
        </tr>
