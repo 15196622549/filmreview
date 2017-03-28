@@ -8,18 +8,22 @@
         <td>#</td>
         <td>影片名称</td>
         <td>影片简介</td>
+        <td>作者</td>
       </tr>
     </thead>
     <tbody>
       <% @movies.each do |movie| %>
        <tr>
          <td>#</td>
-         <td><%= link_to(movie.title, movie_path(movie)) %>></td>
+         <td><%= link_to(movie.title, movie_path(movie)) %></td>
          <td><%= movie.description %></td>
+         <td><%= movie.user.email%></td>
          <td>
+           <% if current_user && current_user == movie.user %>
            <%= link_to("编辑", edit_movie_path(movie), class: "btn btn-sm btn-default")%>
            <%= link_to("删除", movie_path(movie),       class: "btn btn-sm btn-default",
                        method: :delete, )%>
+           <% end %>
          </td>
        </tr>
       <% end %>
