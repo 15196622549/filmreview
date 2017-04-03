@@ -8,6 +8,20 @@ class User < ApplicationRecord
  has_many :reviews
 
  has_many :movie_favorites
- has_many :favorited_movies, :though => :movie_favorites, :source => :movie
+ has_many :favorited_movies, :through => :movie_favorites, :source => :movie
+
+ def is_fan_of?(movie)
+   favorited_movies.include?(movie)
+ end
+
+ def join!(movie)
+   favorited_movies << movie
+ end
+
+ def quit!(movie)
+   favorited_movies.delete(movie)
+ end
+
+
 
 end
