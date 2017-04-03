@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  before_action :authenticate_user! , only: [:new, :create, :edit, :update, :destroy]
+  before_action :authenticate_user! , only: [:new, :create, :edit, :update, :destroy, :join, :quit]
 
   def index
     @movies = Movie.all
@@ -13,7 +13,8 @@ class MoviesController < ApplicationController
     @movie = Movie.new(movie_params)
     @movie.user = current_user
     if @movie.save
-        redirect_to movies_path
+      current_user.join!(@movie)
+      redirect_to movies_path
     else
         render :new
     end
@@ -50,6 +51,28 @@ class MoviesController < ApplicationController
     end
     @movie.destroy
     redirect_to movies_path
+  end
+
+  def join
+    @movie = Movie.find(params[:id])
+
+     if !current_user.is_fan_of?(@movie)
+       current_user.join!(@movie)
+       flash[:notice] = "favorited"
+     else
+       flash[:warning] = "have been favorited"
+     end
+     redirect_to movie_path(@movie)
+   end
+
+   def quit
+     @movie = Movie.find(params[:id])
+
+     if current_user.is_fan_of?(@movie)
+       current_user.quit!(@movie)
+     else
+     end
+    redirect_to movie_path(@movie)
   end
 
 
