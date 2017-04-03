@@ -3,9 +3,11 @@
 
   <span class="pull-right">
     <% if current_user && current_user.is_fan_of?(@movie) %>
-       <label class="label label-succsess">收藏</label>
+       
+          <%= link_to("取消收藏", quit_movie_path(@movie), method: :post, class: "btn btn-default") %>
     <% else %>
-       <lable class="label label-warning">取消收藏</label>
+
+          <%= link_to("收藏", join_movie_path(@movie), method: :post, class: "btn btn-default") %>
     <% end %>
   </span>
 
